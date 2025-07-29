@@ -1,0 +1,27 @@
+# 📦 Import Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
+# 🗂️ Load Dataset
+df = pd.read_csv("your_dataset.csv")  # Replace with your actual filename
+df['Date'] = pd.to_datetime(df['Date'])  # Replace 'Date' with your actual date column
+df.set_index('Date', inplace=True)
+
+# 📈 Choose a Time Series Column (e.g., Delays or Passengers)
+ts = df['Delay']  # Replace 'Delay' with the actual column you're analyzing
+
+# 🧼 Handle Missing Values (optional)
+ts = ts.fillna(method='ffill')
+
+# 📊 ACF Plot (AutoCorrelation Function)
+plt.figure(figsize=(10, 5))
+plot_acf(ts, lags=30)
+plt.title('Autocorrelation (ACF) Plot')
+plt.show()
+
+# 📊 PACF Plot (Partial AutoCorrelation Function)
+plt.figure(figsize=(10, 5))
+plot_pacf(ts, lags=30, method='ywm')
+plt.title('Partial Autocorrelation (PACF) Plot')
+plt.show()
